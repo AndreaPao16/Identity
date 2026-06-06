@@ -4,7 +4,7 @@ namespace Identity.Identity
 {
     public class MyRol : IdentityRole
     {
-        public string descripcion { get; set; }
+        public string Descripcion { get; set; }
 
     }
 }

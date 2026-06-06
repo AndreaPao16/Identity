@@ -1,0 +1,45 @@
+﻿@page
+@model RolesModel
+@{
+    List<MyRol> MyRoles = ViewData["roles"] as List<MyRol>;
+}
+
+<div>
+    <table>
+        @if (MyRoles == null || MyRoles.Count == 0)
+        {
+            <tr>
+                <td>
+                    <h3>No hay roles</h3>
+                </td>
+            </tr>
+        }
+        else
+        {
+            @foreach (var item in MyRoles)
+            {
+                <tr>
+                    <td>
+                        <strong>@item.Name </strong> @item.Descripcion
+                    </td>
+                </tr>
+            }
+        }
+    </table>
+
+    <form method="post">
+        <div>
+            <label>Nombre</label>
+            <input asp-for="Rol.Name" />
+        </div>
+
+        <div>
+            <label>Descripción</label>
+            <input asp-for="Rol.Descripcion" />
+        </div>
+
+        <button type="submit"> Registrar</button>
+
+    </form>
+
+</div>

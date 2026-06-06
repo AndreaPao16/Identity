@@ -4,20 +4,18 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace Identity.Pages
 {
-
-
-    public class IndexModel : PageModel
+    [Authorize(Roles = "admin")]
+    public class Privacy2Model : PageModel
     {
-        private readonly ILogger<IndexModel> _logger;
+        private readonly ILogger<Privacy2Model> _logger;
 
-        public IndexModel(ILogger<IndexModel> logger)
+        public Privacy2Model(ILogger<Privacy2Model> logger)
         {
             _logger = logger;
         }
 
         public void OnGet()
         {
-
         }
     }
 }
