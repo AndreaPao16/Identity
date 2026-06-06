@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace Identity.Pages
 {
-    [Authorize(Roles = "admin")]
+    [Authorize(Roles = "Admin")]
     public class Privacy2Model : PageModel
     {
         private readonly ILogger<Privacy2Model> _logger;

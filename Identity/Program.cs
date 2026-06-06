@@ -11,6 +11,10 @@ var connectionString = builder.Configuration.GetConnectionString("DefaultConnect
 
 builder.Services.AddDbContext<MyIdentityDBContext>(o => o.UseSqlServer(connectionString));
 
+builder.Services.AddAuthentication().AddBearerToken(IdentityConstants.BearerScheme);
+builder.Services.AddAuthorizationBuilder();
+
+
 builder.Services.AddIdentity<MyUser, MyRol>(
     options =>
     {
@@ -31,17 +35,22 @@ builder.Services.AddIdentity<MyUser, MyRol>(
     })
 
     .AddDefaultTokenProviders()
-    .AddEntityFrameworkStores<MyIdentityDBContext>();
+    .AddEntityFrameworkStores<MyIdentityDBContext>()
+    .AddApiEndpoints();
+
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
 
 builder.Services.ConfigureApplicationCookie(options =>
 {
     options.LoginPath = "/Login";
+    options.AccessDeniedPath = "/AccessDenied";
 });
 
 
 var app = builder.Build();
 
-
+app.MapIdentityApi<MyUser>();
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
@@ -50,8 +59,13 @@ if (!app.Environment.IsDevelopment())
     // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
+else
+{
+    app.UseSwagger();
+    app.UseSwaggerUI();
+}
 
-app.UseHttpsRedirection();
+    app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
